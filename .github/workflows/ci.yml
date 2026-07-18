@@ -25,12 +25,22 @@ jobs:
           docker build \
             -t ${{ secrets.DOCKER_USERNAME }}/myapp:${{ github.sha }} \
             -f employee-app/Dockerfile \
-            employee-app
+            employee-appgit 
 
       - name: Push Docker Image
         run: |
           docker push \
             ${{ secrets.DOCKER_USERNAME }}/myapp:${{ github.sha }}
+
+      - name: Copy Docker Compose file to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          source: "employee-app/docker-compose.yml"
+          target: "/home/ec2-user/myapp"
+          strip_components: 1
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.3
@@ -38,7 +48,9 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-
+          source: "employee-app/docker-compose.yml"
+          target: "/home/ec2-user/myapp"
+        strip_components: 1
           script: |
             cd /home/ubuntu/myapp
 
