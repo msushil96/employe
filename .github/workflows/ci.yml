@@ -42,9 +42,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          source: |
-            employee-app/docker-compose.yml
-            employee-app/schema.sql
+          source: "employee-app/docker-compose.yml,employee-app/schema.sql"
           target: "/home/ec2-user/myapp"
           strip_components: 1
 
