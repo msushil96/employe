@@ -24,7 +24,7 @@ jobs:
         run: |
           docker build \
             -t ${{ secrets.DOCKER_USERNAME }}/myapp:${{ github.sha }} \
-            -f Dockerfile \
+            -f employee-app/Dockerfile \
             .
 
       - name: Push Docker Image
