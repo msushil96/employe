@@ -1,5 +1,5 @@
 
-name: Build and Push Docker Image &run on ec2 under docker compose
+name: Build and Push Docker Image &run on ec2 under docker compose env
 
 on:
   push:
