@@ -36,13 +36,15 @@ jobs:
             ${{ secrets.DOCKER_USERNAME }}/myapp:${{ github.sha }}
 
 
-      - name: Copy Docker Compose file to EC2
+      - name: Copy Docker Compose and SQL Schema to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          source: "employee-app/docker-compose.yml"
+          source: |
+            employee-app/docker-compose.yml
+            employee-app/schema.sql
           target: "/home/ec2-user/myapp"
           strip_components: 1
 
@@ -76,3 +78,9 @@ jobs:
             echo "Removing unused images..."
 
             docker image prune -f
+
+            echo "Deployment completed successfully."
+
+            echo "Running containers:"
+
+            docker compose ps
