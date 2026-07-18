@@ -1,4 +1,4 @@
-name: Build and Push Docker Image &run on ec2 under compose
+name: Build and Push Docker Image &run on ec2 under docker compose
 
 on:
   push:
