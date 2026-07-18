@@ -3,9 +3,9 @@ version: "3.9"
 services:
   app:
     build: .
-    image: employee-app:local
+    image: ${DOCKER_USERNAME}/myapp:${IMAGE_TAG}
     ports:
-      - "5000:5000"
+      - "80:5000"
     environment:
       APP_PORT: 5000
       DB_HOST: db
